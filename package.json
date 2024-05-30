@@ -1,0 +1,22 @@
+{
+  "name": "@lemanschik/app-launcher",
+  "version": "0.0.123",
+  "homepage": "https://pinokio.computer",
+  "description": "pinokio",
+  "main": "main.js",
+  "email": "cocktailpeanuts@proton.me",
+  "author": "https://twitter.com/cocktailpeanut",
+  "scripts": {
+    "start": "electron .",
+    "pack": "./node_modules/.bin/electron-builder --dir",
+    "dist": "npm run monkeypatch && export SNAPCRAFT_BUILD_ENVIRONMENT=host && export SNAP_DESTRUCTIVE_MODE='true' && ./node_modules/.bin/electron-builder -mwl && npm run zip",
+    "zip": "node script/zip",
+    "monkeypatch": "cp temp/yarn.js node_modules/app-builder-lib/out/util/yarn.js && cp temp/rebuild.js node_modules/@electron/rebuild/lib/src/rebuild.js",
+    "postinstall": "npm run monkeypatch && ./node_modules/.bin/electron-builder install-app-deps"
+  },
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "@lemanschik/app-launcherd": "https://github.com/lemanschik/esm-app-launcherd"
+  },
+  "devDependencies": {}
+}
